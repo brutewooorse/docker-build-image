@@ -1,15 +1,15 @@
 FROM ubuntu:latest
 
-ENV DEBIAN_FRONTEND="noninteractive"
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get -qq -y update && apt-get -qq -y upgrade && apt-get -qq install -y software-properties-common \
         && add-apt-repository ppa:rock-core/qt4 \
-        && apt-get -qq install -y git g++ gcc autoconf automake \
+        && apt-get -qq install -y xz-utils neofetch \
+        git g++ gcc autoconf automake \
         m4 libtool qt4-qmake make libqt4-dev libcurl4-openssl-dev \
         libcrypto++-dev libsqlite3-dev libc-ares-dev \
         libsodium-dev libnautilus-extension-dev \
-        libssl-dev libfreeimage-dev swig \
-        && apt-get -y autoremove
+        libssl-dev libfreeimage-dev swig
 
 ENV MEGA_SDK_VERSION '3.9.2'
 RUN git clone https://github.com/meganz/sdk.git --depth=1 -b v$MEGA_SDK_VERSION ~/sdk \
