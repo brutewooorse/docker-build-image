@@ -1,21 +1,4 @@
 #write here to start build   
 
-
-
- 
- mega-sdk-python-3.9.2
- 
-   
-   
-  
-  
-  
-  
- 
- 
- 
-
-
-
-
+mega-sdk-python-3.9.2
 
