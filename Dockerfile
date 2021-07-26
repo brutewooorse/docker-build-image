@@ -2,7 +2,7 @@ FROM ubuntu:latest
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get -qq -y update && apt-get -qq -y upgrade && apt-get -qq install -y software-properties-common \
+RUN apt-get -qq -y update && apt-get -qq -y upgrade && apt-get -qq install -y --no-install-recommends software-properties-common \
         && add-apt-repository ppa:rock-core/qt4 \
         && apt-get -qq install -y python3-dev python3-pip python3-setuptools \
         git g++ gcc autoconf automake \
