@@ -8,8 +8,7 @@ RUN apt-get -qq update \
         m4 libtool qt4-qmake make libqt4-dev libcurl4-openssl-dev \
         libcrypto++-dev libsqlite3-dev libc-ares-dev \
         libsodium-dev libnautilus-extension-dev \
-        libssl-dev libfreeimage-dev swig \
-    && apt-get -y autoremove
+        libssl-dev libfreeimage-dev swig
 
 
 ENV MEGA_SDK_VERSION '3.9.2'
