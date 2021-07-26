@@ -27,12 +27,3 @@ RUN git clone https://github.com/meganz/sdk.git --depth=1 -b v$MEGA_SDK_VERSION 
 RUN apt-get -qq -y purge autoconf automake g++ gcc libtool m4 make software-properties-common swig \
     && rm -rf -- /var/lib/apt/lists/* /var/cache/apt/archives/* /etc/apt/sources.list.d/* /var/tmp/* /tmp/* \
     && apt-get -qq -y update && apt-get -qq -y upgrade && apt-get -qq -y autoremove && apt-get -qq -y autoclean
-
-RUN apt-get -qq update \
-    && apt-get -qq install -y --no-install-recommends \
-        git g++ gcc autoconf automake \
-        m4 libtool qt4-qmake make libqt4-dev libcurl4-openssl-dev \
-        libcrypto++-dev libsqlite3-dev libc-ares-dev \
-        libsodium-dev libnautilus-extension-dev \
-        libssl-dev libfreeimage-dev swig \
-    && apt-get -y autoremove
