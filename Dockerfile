@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 
-ENV DEBIAN_FRONTEND=noninteractive
+ENV DEBIAN_FRONTEND="noninteractive"
 
 RUN apt-get -qq update \
     && apt-get -qq install -y --no-install-recommends \
