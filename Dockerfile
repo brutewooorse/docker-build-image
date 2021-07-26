@@ -1,4 +1,4 @@
-FROM python:3-slim-buster
+FROM ubuntu:latest
 
 ENV DEBIAN_FRONTEND=noninteractive
 
