@@ -13,7 +13,7 @@ RUN apt-get -qq update && apt-get install -y software-properties-common \
         libcrypto++-dev libsqlite3-dev libc-ares-dev \
         libsodium-dev libnautilus-extension-dev \
         libssl-dev libfreeimage-dev swig \
-    && apt-get -y autoremove
+    && apt-get -y purge software-properties-common autoremove
 
 # Installing mega sdk python binding
 ENV MEGA_SDK_VERSION '3.9.2'
