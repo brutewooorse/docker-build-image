@@ -2,7 +2,7 @@ FROM ubuntu:21.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get -qq update \
+RUN apt-get -qq update && apt-get updgrade -y \
     && apt-get -qq inatall -y add-apt-repository ppa:rock-core/qt4 \
     && apt-get -qq update  \
     && apt-get -qq upgrade -y \
