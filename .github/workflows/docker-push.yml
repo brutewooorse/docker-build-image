@@ -41,7 +41,7 @@ jobs:
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
-#------------------------------------
+
           - name: Cache Docker layers
         uses: actions/cache@v2
         with:
