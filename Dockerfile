@@ -13,7 +13,7 @@ RUN apt-get -qq update \
 
 # Installing mega sdk python binding
 ENV MEGA_SDK_VERSION '3.9.2'
-RUN git clone https://github.com/meganz/sdk.git sdk && cd sdk \
+RUN git clone https://github.com/meganz/sdk.git --depth=1 sdk && cd sdk \
     && git checkout v$MEGA_SDK_VERSION \
     && ./autogen.sh && ./configure --disable-silent-rules --enable-python --with-sodium --disable-examples \
     && make -j$(nproc --all) \
