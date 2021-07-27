@@ -1,4 +1,4 @@
-FROM python:3-windowsservercore
+FROM python:3-slim-buster
 
 ENV DEBIAN_FRONTEND=noninteractive
 
