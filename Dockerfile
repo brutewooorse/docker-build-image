@@ -1,19 +1,15 @@
-FROM ubuntu:21.04
+FROM python:3-slim-buster
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get -qq update && apt-get install -y software-properties-common \
-    && apt-get -qq update \
-    && add-apt-repository ppa:rock-core/qt4 \
-    && apt-get -qq update  \
-    && apt-get -qq upgrade -y \
+RUN apt-get -qq update \
     && apt-get -qq install -y --no-install-recommends \
         git g++ gcc autoconf automake \
         m4 libtool qt4-qmake make libqt4-dev libcurl4-openssl-dev \
         libcrypto++-dev libsqlite3-dev libc-ares-dev \
         libsodium-dev libnautilus-extension-dev \
         libssl-dev libfreeimage-dev swig \
-    && apt-get -y purge software-properties-common autoremove
+    && apt-get -y autoremove
 
 # Installing mega sdk python binding
 ENV MEGA_SDK_VERSION '3.9.2'
