@@ -11,7 +11,7 @@ on:
     - '.github/workflows/docker-push.yml'
 jobs:
   docker:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-21.04
     steps:
       -
         name: Set up QEMU
