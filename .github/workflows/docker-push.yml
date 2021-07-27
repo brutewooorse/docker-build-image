@@ -1,5 +1,5 @@
   
-name: CI to Docker Hub
+name: Mega-Sdk-Docker-Builder
 
 on:
   push:
