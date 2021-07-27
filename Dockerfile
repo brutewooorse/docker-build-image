@@ -25,3 +25,6 @@ RUN apt-get -y purge autoremove \
         libcrypto++-dev libsqlite3-dev libc-ares-dev \
         libsodium-dev libnautilus-extension-dev \
         libssl-dev libfreeimage-dev swig \
+        && rm -rf -- /var/lib/apt/lists/* /var/cache/apt/archives/* /etc/apt/sources.list.d/* /var/tmp/* /tmp/* \
+        && apt-get -qq -y update && apt-get -qq -y upgrade && apt-get -qq -y autoremove && apt-get -qq -y autoclean
+
