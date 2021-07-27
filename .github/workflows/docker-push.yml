@@ -37,7 +37,7 @@ jobs:
           context: ./
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/megasdk:latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/mega-sdk:latest
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
