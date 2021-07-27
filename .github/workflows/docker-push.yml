@@ -2,6 +2,10 @@
       - name: Cache Docker layers
         uses: actions/cache@v2
         with:
+          paths-ignore:
+          - README.md
+          - .github/workflows/docker-push.yml
+          - Dockerfile
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-${{ github.sha }}
           restore-keys: |
@@ -20,7 +24,7 @@
           file: ./Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags:  ${{ secrets.DOCKER_HUB_USERNAME }}/-MegaSdk:3.9.2
+          tags:  ${{ secrets.DOCKER_HUB_USERNAME }}/MegaSdk:3.9.2
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
       - name: Image digest
