@@ -3,7 +3,7 @@ FROM ubuntu:20.04
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get -qq update && apt-get -y upgrade && \
-    && apt-get -qq install -y build-essential && \
+    apt-get -qq install -y build-essential && \
     python python3-pip
         
 
