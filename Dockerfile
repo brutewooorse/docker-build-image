@@ -23,6 +23,7 @@ RUN git clone https://github.com/meganz/sdk.git --depth=1 -b v$MEGA_SDK_VERSION 
     && python3 setup.py bdist_wheel \
     && cd dist/ \
     && pip3 install --no-cache-dir megasdk-$MEGA_SDK_VERSION-*.whl \
+    && pip3 install --no-cache-dir -r requirements.txt \
     && cd ~
 
 
