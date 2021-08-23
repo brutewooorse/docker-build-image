@@ -2,8 +2,9 @@ FROM ubuntu:20.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get -qq update \
-    && apt-get -qq install -y build-essential
+RUN apt-get -qq update && apt-get -y upgrade && \
+    && apt-get -qq install -y build-essential && \
+    python3-pip
         
 
 RUN apt-get -qq update && \
