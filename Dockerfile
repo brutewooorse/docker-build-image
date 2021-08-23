@@ -4,7 +4,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get -qq update && apt-get -y upgrade && \
     && apt-get -qq install -y build-essential && \
-    python3-pip
+    python python3-pip
         
 
 RUN apt-get -qq update && \
