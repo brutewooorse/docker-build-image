@@ -10,6 +10,12 @@ RUN apt-get -qq update \
         libsodium-dev libnautilus-extension-dev \
         libssl-dev libfreeimage-dev swig
 
+RUN add-apt-repository -y ppa:qbittorrent-team/qbittorrent-stable
+RUN apt install -y qbittorrent-nox
+
+
+COPY requirements.txt .
+RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Installing MegaSDK Python binding
 ENV MEGA_SDK_VERSION '3.9.2'
@@ -23,7 +29,6 @@ RUN git clone https://github.com/meganz/sdk.git --depth=1 -b v$MEGA_SDK_VERSION 
     && python3 setup.py bdist_wheel \
     && cd dist/ \
     && pip3 install --no-cache-dir megasdk-$MEGA_SDK_VERSION-*.whl \
-    && pip3 install --no-cache-dir -r requirements.txt \
     && cd ~
 
 
