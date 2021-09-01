@@ -7,21 +7,6 @@ RUN apt-get -qq update && apt-get -y upgrade && \
     python3 python3-pip
         
 
-#Installing telegram-bot-api
-FROM ubuntu:latest as api
-ENV DEBIAN_FRONTEND='noninteractive'
-RUN apt-get update && apt-get upgrade -y && \
-    apt-get install -y git gperf make cmake clang-10 libc++-dev libc++abi-dev libssl-dev zlib1g-dev && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
-WORKDIR /root
-RUN git clone --recursive https://github.com/tdlib/telegram-bot-api.git && cd telegram-bot-api && \
-    git checkout 81f2983 && mkdir build && cd build && \
-    CXXFLAGS="-stdlib=libc++" CC=/usr/bin/clang-10 CXX=/usr/bin/clang++-10 \
-    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=.. .. && \
-    cmake --build . --target install -- -j $(nproc) && cd .. && \
-    ls -l bin/telegram-bot-api*
-
-
 COPY requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
 
@@ -49,3 +34,17 @@ RUN apt-get -y purge \
         && rm -rf -- /var/lib/apt/lists/* /var/cache/apt/archives/* /etc/apt/sources.list.d/* /var/tmp/* /tmp/* \
         && apt-get -qq -y update && apt-get -qq -y upgrade && apt-get -qq -y autoremove && apt-get -qq -y autoclean
 
+
+#Installing telegram-bot-api
+FROM ubuntu:latest as api
+ENV DEBIAN_FRONTEND='noninteractive'
+RUN apt-get update && apt-get upgrade -y && \
+    apt-get install -y git gperf make cmake clang-10 libc++-dev libc++abi-dev libssl-dev zlib1g-dev && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+WORKDIR /root
+RUN git clone --recursive https://github.com/tdlib/telegram-bot-api.git && cd telegram-bot-api && \
+    git checkout 81f2983 && mkdir build && cd build && \
+    CXXFLAGS="-stdlib=libc++" CC=/usr/bin/clang-10 CXX=/usr/bin/clang++-10 \
+    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=.. .. && \
+    cmake --build . --target install -- -j $(nproc) && cd .. && \
+    ls -l bin/telegram-bot-api*
