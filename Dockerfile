@@ -7,6 +7,7 @@ RUN apt-get -qq update && apt-get -y upgrade && \
     python3 python3-pip
         
 
+#Installing telegram-bot-api
 FROM ubuntu:latest as api
 ENV DEBIAN_FRONTEND='noninteractive'
 RUN apt-get update && apt-get upgrade -y && \
