@@ -1,44 +1,82 @@
-  
-name: Mega-Sdk-Docker-Builder
 
-on:
-  push:
-    paths-ignore:
-    - README.md
-    - .github/workflows/docker-push.yml
-    - Dockerfile
-    
-    branches: [ main ]
-
-jobs:
-
-  build:
+  build-api-image:
     runs-on: ubuntu-latest
-
     steps:
-    
-      - name: Check Out Repo 
-        uses: actions/checkout@v2
-
-      - name: Login to Docker Hub
+      - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
         with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+          registry: ghcr.io
+          username: brutewooorse
+          password: ${{ secrets.GH_PACKAGES_TOKEN }}
 
-      - name: Set up Docker Buildx
-        id: buildx
+      - name: Setup Docker Buildx
+        id: setup_buildx
         uses: docker/setup-buildx-action@v1
 
-      - name: Build and push
-        id: docker_build
+      - name: Cache Docker Layers
+        id: cache_docker_layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-tgbot-api-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-buildx-tgbot-api-
+
+      - name: Build-Push Docker Image
+        id: docker_build_push
         uses: docker/build-push-action@v2
         with:
-          context: ./
-          file: ./Dockerfile
-          no-cache: true
+          builder: ${{ steps.setup_buildx.outputs.name }}
+          target: api
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/mega-sdk:latest
+          tags: ghcr.io/brutewoorse/tgbot:api
 
-      - name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
+      - name: Docker Image Digest
+        run: echo ${{ steps.docker_build_push.outputs.digest }}
+
+      - name: Move Docker Layer Cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+
+  build-mega-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: brutewooorse
+          password: ${{ secrets.GH_PACKAGES_TOKEN }}
+
+      - name: Setup Docker Buildx
+        id: setup_buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Cache Docker Layers
+        id: cache_docker_layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-mega-sdk-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-buildx-mega-sdk-
+
+      - name: Build-Push Docker Image
+        id: docker_build_push
+        uses: docker/build-push-action@v2
+        with:
+          builder: ${{ steps.setup_buildx.outputs.name }}
+          target: mega
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new
+          push: true
+          tags: ghcr.io/brutewoorse/mega-sdk:mega
+
+      - name: Docker Image Digest
+        run: echo ${{ steps.docker_build_push.outputs.digest }}
+
+      - name: Move Docker Layer Cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
