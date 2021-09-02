@@ -36,8 +36,6 @@ RUN git clone https://github.com/meganz/sdk.git mega-sdk/ && cd mega-sdk/ && \
     ./autogen.sh && ./configure --disable-silent-rules --enable-python --with-sodium --disable-examples && \
     make -j $(nproc) && cd bindings/python/ && python3 setup.py bdist_wheel
 
-RUN pip3 install --no-cache-dir /root/mega-sdk/bindings/python/dist/megasdk-*.whl
-
 RUN apt-get -y purge \
         git g++ gcc autoconf automake \
         m4 libtool qt4-qmake make libqt4-dev libcurl4-openssl-dev \
