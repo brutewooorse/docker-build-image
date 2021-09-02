@@ -2,6 +2,7 @@ FROM ubuntu:20.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+WORKDIR /root
 RUN apt-get update && apt-get upgrade -y && \
     apt-get install -y git gperf make cmake clang-10 libc++-dev libc++abi-dev libssl-dev zlib1g-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -11,9 +12,7 @@ RUN git clone --recursive https://github.com/tdlib/telegram-bot-api.git && cd te
     CXXFLAGS="-stdlib=libc++" CC=/usr/bin/clang-10 CXX=/usr/bin/clang++-10 \
     cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=.. .. && \
     cmake --build . --target install -- -j $(nproc) && cd .. && \
-    ls -l bin/telegram-bot-api* \
-    && cd
-
+    ls -l bin/telegram-bot-api*
 
 RUN apt-get -y update && apt-get -y upgrade && \
         apt-get install -y software-properties-common && \
@@ -31,19 +30,13 @@ COPY requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Installing MegaSDK Python binding
-ENV MEGA_SDK_VERSION '3.9.2'
-RUN git clone https://github.com/meganz/sdk.git --depth=1 -b v$MEGA_SDK_VERSION ~/sdk \
-    && cd ~/sdk \
-    && rm -rf .git \
-    && ./autogen.sh \
-    && ./configure --disable-silent-rules --enable-python --with-sodium --disable-examples \
-    && make -j$(nproc --all) \
-    && cd bindings/python/ \
-    && python3 setup.py bdist_wheel \
-    && cd dist/ \
-    && pip3 install --no-cache-dir megasdk-$MEGA_SDK_VERSION-*.whl \
-    && cd ~
+ENV MEGA_SDK_VERSION='3.9.2'
+RUN git clone https://github.com/meganz/sdk.git mega-sdk/ && cd mega-sdk/ && \
+    git checkout v$MEGA_SDK_VERSION && \
+    ./autogen.sh && ./configure --disable-silent-rules --enable-python --with-sodium --disable-examples && \
+    make -j $(nproc) && cd bindings/python/ && python3 setup.py bdist_wheel
 
+RUN pip3 install --no-cache-dir /root/mega-sdk/bindings/python/dist/megasdk-*.whl
 
 RUN apt-get -y purge \
         git g++ gcc autoconf automake \
