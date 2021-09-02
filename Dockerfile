@@ -12,9 +12,9 @@ RUN git clone --recursive https://github.com/tdlib/telegram-bot-api.git && cd te
     git checkout 81f2983 && mkdir build && cd build && \
     CXXFLAGS="-stdlib=libc++" CC=/usr/bin/clang-10 CXX=/usr/bin/clang++-10 \
     cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=.. .. && \
-    cmake --build . --target install -- -j $(nproc) && cd .. && \
-    ls -l bin/telegram-bot-api*
-
+    cmake --build . --target install -- -j $(nproc) && cd /root && \
+    ls -l /root/telegram-bot-api*
+    
 RUN apt-get -y update && apt-get -y upgrade && \
         apt-get install -y software-properties-common && \
         add-apt-repository -y ppa:qbittorrent-team/qbittorrent-stable && \
