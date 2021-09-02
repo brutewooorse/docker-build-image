@@ -1,8 +1,9 @@
 FROM ubuntu:20.04
+WORKDIR /root
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-WORKDIR /root
+
 RUN apt-get update && apt-get upgrade -y && \
     apt-get install -y git gperf make cmake clang-10 libc++-dev libc++abi-dev libssl-dev zlib1g-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
