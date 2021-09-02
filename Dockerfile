@@ -25,10 +25,6 @@ RUN apt-get -y update && apt-get -y upgrade && \
         libsqlite3-dev libfreeimage-dev swig libboost-all-dev \
         libpthread-stubs0-dev zlib1g-dev
 
-
-COPY requirements.txt .
-RUN pip3 install --no-cache-dir -r requirements.txt
-
 # Installing MegaSDK Python binding
 ENV MEGA_SDK_VERSION='3.9.2'
 RUN git clone https://github.com/meganz/sdk.git mega-sdk/ && cd mega-sdk/ && \
