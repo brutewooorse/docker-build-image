@@ -2,6 +2,18 @@ FROM ubuntu:20.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+RUN apt-get update && apt-get upgrade -y && \
+    apt-get install -y git gperf make cmake clang-10 libc++-dev libc++abi-dev libssl-dev zlib1g-dev && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+RUN git clone --recursive https://github.com/tdlib/telegram-bot-api.git \
+    && cd telegram-bot-api \
+    && mkdir build \
+    && cd build \
+    && cmake -DCMAKE_BUILD_TYPE=Release .. \
+    && cmake --build . --target install \
+    && cd
+
 RUN apt-get -y update && apt-get -y upgrade && \
         apt-get install -y software-properties-common && \
         add-apt-repository -y ppa:qbittorrent-team/qbittorrent-stable && \
@@ -42,14 +54,4 @@ RUN apt-get -y purge \
         && apt-get -qq -y update && apt-get -qq -y upgrade && apt-get -qq -y autoremove && apt-get -qq -y autoclean
 
 
-RUN apt-get update && apt-get upgrade -y && \
-    apt-get install -y git gperf make cmake clang-10 libc++-dev libc++abi-dev libssl-dev zlib1g-dev && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN git clone --recursive https://github.com/tdlib/telegram-bot-api.git \
-    && cd telegram-bot-api \
-    && mkdir build \
-    && cd build \
-    && cmake -DCMAKE_BUILD_TYPE=Release .. \
-    && cmake --build . --target install \
-    && cd
