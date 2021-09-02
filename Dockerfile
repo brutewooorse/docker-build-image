@@ -12,6 +12,8 @@ RUN git clone --recursive https://github.com/tdlib/telegram-bot-api.git && cd te
     cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=.. .. && \
     cmake --build . --target install -- -j $(nproc) && cd .. && \
     ls -l bin/telegram-bot-api*
+    
+COPY telegram-bot-api /usr/bin/telegram-bot-api
 
 RUN apt-get -y update && apt-get -y upgrade && \
         apt-get install -y software-properties-common && \
