@@ -13,7 +13,7 @@ RUN git clone --recursive https://github.com/tdlib/telegram-bot-api.git && cd te
     CXXFLAGS="-stdlib=libc++" CC=/usr/bin/clang-10 CXX=/usr/bin/clang++-10 \
     cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=.. .. && \
     cmake --build . --target install -- -j $(nproc) && cd /root/bin && \
-    ls -l /root/telegram-bot-api*
+    ls -l /root/bin/telegram-bot-api*
     
 RUN apt-get -y update && apt-get -y upgrade && \
         apt-get install -y software-properties-common && \
