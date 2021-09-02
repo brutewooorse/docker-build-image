@@ -4,6 +4,11 @@ on:
   push:
     paths:
       - "Dockerfile"
+      paths-ignore:
+      - "Dockerfile"
+      - "README.md"
+      - ".gihub/workflow/*"
+
   workflow_dispatch:
 
 jobs:
